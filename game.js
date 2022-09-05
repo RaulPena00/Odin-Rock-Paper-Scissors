@@ -1,56 +1,109 @@
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissor = document.querySelector('#scissor');
+
+rock.addEventListener("click", () => playRound("ROCK"));
+paper.addEventListener("click", () => playRound("PAPER"));
+scissor.addEventListener("click", () => playRound("SCISSOR"));
+
+
 function getComputerChoice(){
     let choice = Math.random()*(2);
     choice = Math.round(choice);
     return choice;
 }
 
-function playerChoise(){
-    let playerchoise = prompt("Chose a number : 0-Rock, 1-Paper or 2-Scissor?")
-    
-    return playerchoise;
+function pointCounter(matchResult){
+    const totalMatches = document.getElementById("matches");
+    const win = document.getElementById("win");
+    const lose = document.getElementById("lose");
+    const drawn = document.getElementById("drawn")
+
+    if(matchResult === "WIN"){
+        win.innerHTML ++
+        totalMatches.innerHTML ++
+    }
+
+    if(matchResult === "LOSE"){
+        lose.innerHTML ++ 
+        totalMatches.innerHTML ++ 
+    }
+
+    if(matchResult === "DRAWN"){
+        drawn.innerHTML ++
+        totalMatches.innerHTML ++
+    }
+
+    if (totalMatches.innerHTML == 5){
+        
+        if(win.innerHTML > lose.innerHTML){
+            alert("You Won!")
+        } 
+        else if (lose.innerHTML > win.innerHTML){
+            alert("You Lose!")
+        }
+        else if (lose.innerHTML === win.innerHTML){
+            alert("It´s a Drawn!")
+        }
+        
+        win.innerHTML = 0;
+        lose.innerHTML = 0;
+        drawn.innerHTML = 0;
+        totalMatches.innerHTML = 0;
+    }
 }
 
 function playRound(playerSelection, computerSelection){
 
-    playerSelection = playerChoise();
+    const results = document.getElementById("results");
     computerSelection = getComputerChoice();
 
-    if (playerSelection == 0 && computerSelection == 0){
-        console.log("It's a draw! Rock and Rock");
+    if (playerSelection === "ROCK" && computerSelection == 0){
+        results.innerHTML = ("It's a draw! Rock and Rock");
+        pointCounter("DRAWN")
     }
-    else if (playerSelection == 1 && computerSelection == 1){
-        console.log("It's a draw! Paper and Paper");
+    else if (playerSelection == "PAPER" && computerSelection == 1){
+        results.innerHTML = ("It's a draw! Paper and Paper");
+        pointCounter("DRAWN")
     }
-    else if (playerSelection == 2 && computerSelection == 2){
-        console.log("It's a draw! Scissor and Scissor");
+    else if (playerSelection == "SCISSOR" && computerSelection == 2){
+        results.innerHTML = ("It's a draw! Scissor and Scissor");
+        pointCounter("DRAWN")
     }
-    else if (playerSelection == 0 && computerSelection == 1){
-        console.log("You Lose! Paper beat's Rock");
+    else if (playerSelection == "ROCK" && computerSelection == 1){
+        results.innerHTML =  ("You Lose! Paper beat's Rock");
+        pointCounter("LOSE")
     }
-    else if (playerSelection == 0 && computerSelection == 2){
-        console.log("You Won! Rock beat's Scissor");
+    else if (playerSelection == "ROCK" && computerSelection == 2){
+        results.innerHTML = ("You Won! Rock beat's Scissor");
+        pointCounter("WIN")
     }
-    else if (playerSelection == 1 && computerSelection == 0){
-        console.log("You Won! Paper beat's Rock");
+    else if (playerSelection == "PAPER" && computerSelection == 0){
+        results.innerHTML = ("You Won! Paper beat's Rock");
+        pointCounter("WIN")
     }
-    else if (playerSelection == 1 && computerSelection == 2){
-        console.log("You Lose! Scissor beat's Paper");
+    else if (playerSelection == "PAPER" && computerSelection == 2){
+        results.innerHTML = ("You Lose! Scissor beat's Paper");
+        pointCounter("LOSE")
     }
-    else if (playerSelection == 2 && computerSelection == 0){
-        console.log("You Lose! Rock beat's Scissor")
+    else if (playerSelection == "SCISSOR" && computerSelection == 0){
+        results.innerHTML = ("You Lose! Rock beat's Scissor");
+        pointCounter("LOSE")
     }
-    else if (playerSelection == 2 && computerSelection == 1){
-        console.log("You Won! Scissor beat's Paper");
+    else if (playerSelection == "SCISSOR" && computerSelection == 1){
+        results.innerHTML = ("You Won! Scissor beat's Paper");
+        pointCounter("WIN")
     }
-    else if (playerSelection != 0||1||2){
-        console.log("Invalid value")
+    else if (playerSelection != "ROCK"||"PAPER"||"SCISSOR"){
+        results.innerHTML = ("Invalid value")
     }
 }
 
-function game(){
-    for (let i = 0; i < 5; i++) {
-        playRound()        
-     }
-}
 
-game()
+//function game(){
+//    for (let i = 0; i < 5; i++) {
+//        playRound()        
+//     }
+//}
+
+//game()
